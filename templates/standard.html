@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}{{ standard.code }} — {{ standard.title }} — ByTheBooks{% endblock %}
+
+{% block content %}
+<div class="standard-page container">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="{{ url_for('views.browse') }}">Standards</a>
+    <span>›</span>
+    <span>{{ standard.framework_code }}</span>
+    <span>›</span>
+    <span>{{ standard.code }}</span>
+  </nav>
+
+  <!-- Standard header -->
+  <div class="standard-header">
+    <div class="standard-header-left">
+      <div class="standard-meta-row">
+        <span class="fw-badge large">{{ standard.framework_code }}</span>
+        <span class="status-pill {{ standard.status }}">{{ standard.status | capitalize }}</span>
+        {% if standard.effective_date %}
+        <span class="effective-date">Effective: {{ standard.effective_date }}</span>
+        {% endif %}
+      </div>
+      <h1 class="standard-code">{{ standard.code }}</h1>
+      <h2 class="standard-title">{{ standard.title }}</h2>
+      {% if standard.topics %}
+      <div class="topic-tags">
+        {% for topic in standard.topics %}
+        <a href="{{ url_for('views.browse') }}?topic={{ topic | urlencode }}" class="topic-tag">{{ topic }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="standard-header-actions">
+      {% if standard.official_url %}
+      <a href="{{ standard.official_url }}" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Official Standard
+      </a>
+      {% endif %}
+      <a href="{{ url_for('views.compare') }}?a={{ standard.id }}" class="btn btn-outline">Compare with another →</a>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="standard-body">
+    <!-- Left: content -->
+    <div class="standard-content">
+      <section class="content-section">
+        <h3 class="content-heading">Plain-English Summary</h3>
+        <p class="standard-summary">{{ standard.summary }}</p>
+      </section>
+
+      {% if standard.key_points %}
+      <section class="content-section">
+        <h3 class="content-heading">Key Points</h3>
+        <ul class="key-points-list">
+          {% for point in standard.key_points %}
+          <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+    </div>
+
+    <!-- Right: metadata card -->
+    <div class="standard-sidebar">
+      <div class="info-card">
+        <h4 class="info-card-heading">About this standard</h4>
+        <dl class="info-dl">
+          <dt>Framework</dt>
+          <dd>{{ standard.framework_name }}</dd>
+          <dt>Governing Body</dt>
+          <dd>{{ standard.governing_body }}</dd>
+          <dt>Region</dt>
+          <dd>{{ standard.region }}</dd>
+          {% if standard.effective_date %}
+          <dt>Effective Date</dt>
+          <dd>{{ standard.effective_date }}</dd>
+          {% endif %}
+          <dt>Status</dt>
+          <dd>{{ standard.status | capitalize }}</dd>
+        </dl>
+      </div>
+
+      <div class="info-card ask-card">
+        <h4 class="info-card-heading">Have a question about this standard?</h4>
+        <p>Ask the ByTheBooks AI assistant for guidance on how this standard applies to your situation.</p>
+        <a href="{{ url_for('views.chat') }}?q=Explain+how+{{ standard.code | urlencode }}+applies" class="btn btn-primary btn-block">
+          Ask AI about {{ standard.code }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related standards -->
+  {% if standard.related %}
+  <section class="related-section">
+    <h3 class="section-title">Same topic — other frameworks</h3>
+    <div class="related-grid">
+      {% for rel in standard.related %}
+      <a href="{{ url_for('views.standard_detail', standard_id=rel.id) }}" class="related-card">
+        <span class="fw-badge small">{{ rel.framework_code }}</span>
+        <span class="related-code">{{ rel.code }}</span>
+        <span class="related-title">{{ rel.title }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+</div>
+{% endblock %}

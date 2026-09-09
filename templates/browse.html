@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Browse Standards — ByTheBooks{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <p class="page-eyebrow">Directory</p>
+    <h1 class="page-title">Browse all standards</h1>
+    <p class="page-desc">Filter by framework, topic, or keyword. Each standard includes official excerpts and a plain-English summary.</p>
+  </div>
+</div>
+
+<div class="browse-layout container">
+  <!-- Sidebar filters -->
+  <aside class="filter-sidebar">
+    <div class="filter-group">
+      <h3 class="filter-heading">Framework</h3>
+      {% for fw in frameworks %}
+      <label class="filter-label">
+        <input type="checkbox" class="filter-fw" value="{{ fw.code }}" /> {{ fw.code }}
+        <span class="filter-count">{{ fw.standard_count }}</span>
+      </label>
+      {% endfor %}
+    </div>
+
+    <div class="filter-group">
+      <h3 class="filter-heading">Topic</h3>
+      {% for topic in topics %}
+      <label class="filter-label">
+        <input type="checkbox" class="filter-topic" value="{{ topic.name }}" /> {{ topic.name }}
+      </label>
+      {% endfor %}
+    </div>
+
+    <div class="filter-group">
+      <h3 class="filter-heading">Status</h3>
+      <label class="filter-label">
+        <input type="radio" name="status-filter" class="filter-status" value="" checked /> All
+      </label>
+      <label class="filter-label">
+        <input type="radio" name="status-filter" class="filter-status" value="active" /> Active
+      </label>
+      <label class="filter-label">
+        <input type="radio" name="status-filter" class="filter-status" value="superseded" /> Superseded
+      </label>
+    </div>
+
+    <button class="btn btn-outline btn-sm" id="clearFilters">Clear filters</button>
+  </aside>
+
+  <!-- Main content -->
+  <div class="browse-main">
+    <div class="browse-toolbar">
+      <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Search by title, code, or keyword…" autocomplete="off" />
+      </div>
+      <span class="results-count" id="resultsCount">Loading…</span>
+    </div>
+
+    <div id="standardsGrid" class="standards-grid">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading standards…</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/browse.js') }}"></script>
+<script>
+  // Pre-fill search from URL param
+  const urlQ = new URLSearchParams(window.location.search).get('q');
+  const urlFw = new URLSearchParams(window.location.search).get('framework');
+  if (urlQ) document.getElementById('searchInput').value = urlQ;
+  if (urlFw) {
+    document.querySelectorAll('.filter-fw').forEach(cb => {
+      if (cb.value === urlFw) cb.checked = true;
+    });
+  }
+</script>
+{% endblock %}

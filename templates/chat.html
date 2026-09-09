@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}AI Assistant — ByTheBooks{% endblock %}
+
+{% block content %}
+<div class="chat-layout">
+  <!-- Chat sidebar info -->
+  <aside class="chat-sidebar">
+    <div class="chat-sidebar-inner">
+      <div class="chat-logo">
+        <span class="logo-mark">B</span>
+        <div>
+          <div class="chat-assistant-name">ByTheBooks AI</div>
+          <div class="chat-assistant-sub">AI · Claude Sonnet</div>
+        </div>
+      </div>
+      <p class="chat-welcome-text">Describe your scenario — I'll point you to the exact standards that apply.</p>
+      <div class="chat-coverage">
+        <div class="coverage-label">Covers</div>
+        <div class="coverage-tags">
+          <span class="cov-tag">IFRS</span>
+          <span class="cov-tag">US GAAP</span>
+          <span class="cov-tag">IND AS</span>
+          <span class="cov-tag">UK GAAP</span>
+          <span class="cov-tag">IPSAS</span>
+          <span class="cov-tag">GASB</span>
+          <span class="cov-tag">AASB</span>
+        </div>
+      </div>
+
+      <div class="starters-section-chat">
+        <div class="starters-label">Try a starter</div>
+        <button class="starter-btn" data-q="We just signed a 5-year lease for office space. How do we account for it?">We just signed a 5-year lease for office space. How do we account for it?</button>
+        <button class="starter-btn" data-q="A customer paid us upfront for 3 years of software access. When do we recognize revenue?">A customer paid us upfront for 3 years of software access. When do we recognize revenue?</button>
+        <button class="starter-btn" data-q="We acquired another company last quarter — what standards apply?">We acquired another company last quarter — what standards apply?</button>
+        <button class="starter-btn" data-q="How do I value obsolete inventory on the balance sheet?">How do I value obsolete inventory on the balance sheet?</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Chat main -->
+  <div class="chat-main">
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-empty" id="chatEmpty">
+        <div class="chat-empty-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <p>Ask me about any accounting situation and I'll identify the relevant standards with links to look them up.</p>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <div class="chat-input-wrap">
+        <textarea id="chatInput" class="chat-input" placeholder="Describe your accounting situation…" rows="1"></textarea>
+        <button class="chat-send-btn" id="chatSendBtn" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

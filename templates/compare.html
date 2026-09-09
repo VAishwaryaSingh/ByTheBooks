@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Compare Standards — ByTheBooks{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <p class="page-eyebrow">Comparison Tool</p>
+    <h1 class="page-title">Side-by-side standards</h1>
+    <p class="page-desc">Pick any two standards to compare — or search by topic to see IFRS, US GAAP, IND AS, and more on the same subject.</p>
+  </div>
+</div>
+
+<div class="container compare-container">
+  <!-- Pickers -->
+  <div class="compare-pickers">
+    <div class="picker-group">
+      <label class="picker-label">Standard A</label>
+      <div class="picker-search-wrap">
+        <input type="text" id="searchA" class="picker-input" placeholder="Search IFRS 16, leases, ASC 842…" autocomplete="off" />
+        <div class="picker-dropdown" id="dropdownA"></div>
+      </div>
+      <div class="picker-selected" id="selectedA">
+        <span class="picker-placeholder">No standard selected</span>
+      </div>
+    </div>
+
+    <div class="compare-vs">VS</div>
+
+    <div class="picker-group">
+      <label class="picker-label">Standard B</label>
+      <div class="picker-search-wrap">
+        <input type="text" id="searchB" class="picker-input" placeholder="Search ASC 842, GASB 87, IND AS 116…" autocomplete="off" />
+        <div class="picker-dropdown" id="dropdownB"></div>
+      </div>
+      <div class="picker-selected" id="selectedB">
+        <span class="picker-placeholder">No standard selected</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-actions">
+    <button class="btn btn-primary btn-lg" id="compareBtn" disabled>Compare Standards</button>
+    <button class="btn btn-outline" id="clearCompare">Start over</button>
+  </div>
+
+  <!-- Result -->
+  <div id="compareResult" class="compare-result hidden">
+    <div class="compare-header-row">
+      <div class="compare-col-header" id="colHeaderA">—</div>
+      <div class="compare-col-header" id="colHeaderB">—</div>
+    </div>
+    <div id="compareContent" class="compare-content"></div>
+  </div>
+
+  <div id="compareLoading" class="compare-loading hidden">
+    <div class="spinner large"></div>
+    <p>Generating AI comparison…</p>
+  </div>
+
+  <div id="compareError" class="compare-error hidden"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/compare.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}ByTheBooks — Global Accounting Standards{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ url_for('views.index') }}" class="logo">
+      <span class="logo-mark">B</span>
+      <span class="logo-text">
+        <span class="logo-name">ByTheBooks</span>
+        <span class="logo-sub">Global Accounting Standards</span>
+      </span>
+    </a>
+
+    <nav class="main-nav">
+      <a href="{{ url_for('views.browse') }}" class="nav-link {% if request.path.startswith('/browse') or request.path.startswith('/standards') %}active{% endif %}">Browse</a>
+      <a href="{{ url_for('views.compare') }}" class="nav-link {% if request.path.startswith('/compare') %}active{% endif %}">Compare</a>
+      <a href="{{ url_for('views.chat') }}" class="nav-link {% if request.path.startswith('/chat') %}active{% endif %}">Ask Assistant</a>
+    </nav>
+
+    <button type="button" class="btn btn-outline" data-apikey-trigger title="Add your Anthropic API key to use Chat &amp; Compare AI features">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+      API Key
+    </button>
+
+    <a href="{{ url_for('views.chat') }}" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Ask ByTheBooks AI
+    </a>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="{{ url_for('views.browse') }}" class="mobile-nav-link">Browse Standards</a>
+    <a href="{{ url_for('views.compare') }}" class="mobile-nav-link">Compare Standards</a>
+    <a href="{{ url_for('views.chat') }}" class="mobile-nav-link">Ask AI Assistant</a>
+    <button type="button" class="mobile-nav-link" data-apikey-trigger style="width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--border);cursor:pointer;font:inherit;">Add API Key</button>
+  </div>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark small">B</span>
+      <span class="footer-name">ByTheBooks</span>
+    </div>
+    <p class="footer-desc">A free reference tool for accountants and auditors worldwide. Covering IFRS, US GAAP, IND AS, UK GAAP, IPSAS, GASB, and AASB.</p>
+    <div class="footer-links">
+      <a href="{{ url_for('views.browse') }}">Browse Standards</a>
+      <a href="{{ url_for('views.compare') }}">Compare</a>
+      <a href="{{ url_for('views.chat') }}">AI Assistant</a>
+    </div>
+    <p class="footer-legal">Standards summaries are for educational reference only. Always consult the official standard text for professional use. Official standards may be subject to copyright by their respective issuing bodies.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  });
+</script>
+<script src="{{ url_for('static', filename='js/apikey.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

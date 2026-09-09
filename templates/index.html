@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}ByTheBooks — Every Standard. Every Framework. One Source of Truth.{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Global Accounting Standards Index</p>
+        <h1 class="hero-title">Every standard.<br><span class="accent">Every framework.</span><br>One source of truth.</h1>
+        <p class="hero-desc">A working reference for auditors and accountants. Browse IFRS, US GAAP, IND AS, UK GAAP, IPSAS, GASB, and AASB. Compare them side-by-side. Ask an AI assistant what applies to your situation.</p>
+        <div class="hero-actions">
+          <a href="{{ url_for('views.browse') }}" class="btn btn-primary btn-lg">Browse Standards →</a>
+          <a href="{{ url_for('views.chat') }}" class="btn btn-outline btn-lg">Ask AI Assistant</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-number">7</span>
+          <span class="stat-label">Frameworks</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">200+</span>
+          <span class="stat-label">Standards</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">24</span>
+          <span class="stat-label">Topic Areas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Search bar -->
+<section class="search-section">
+  <div class="container">
+    <form class="hero-search" action="{{ url_for('views.browse') }}" method="get">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" name="q" placeholder="Search by standard code, title, or keyword (e.g. IFRS 16, leases, revenue)…" class="hero-search-input" autocomplete="off" />
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</section>
+
+<!-- Frameworks grid -->
+<section class="frameworks-section">
+  <div class="container">
+    <h2 class="section-title">Frameworks covered</h2>
+    <div class="frameworks-grid">
+      {% for fw in frameworks %}
+      <a href="{{ url_for('views.browse') }}?framework={{ fw.code }}" class="framework-card">
+        <div class="fw-badge">{{ fw.code }}</div>
+        <div class="fw-name">{{ fw.name }}</div>
+        <div class="fw-body">{{ fw.governing_body }}</div>
+        <div class="fw-meta">
+          <span class="fw-region">{{ fw.region }}</span>
+          <span class="fw-count">{{ fw.standard_count }} standards</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Three feature sections -->
+<section class="features-section">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <h3 class="feature-title">Look up any standard</h3>
+        <p class="feature-desc">Official text alongside plain-English summaries written for working accountants. Filter by framework, topic, or keyword.</p>
+        <a href="{{ url_for('views.browse') }}" class="feature-link">Explore →</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+        </div>
+        <h3 class="feature-title">Compare by topic</h3>
+        <p class="feature-desc">See IFRS, US GAAP, IND AS, and more on the same topic side-by-side. Spot the differences fast. Essential for multinational reporting.</p>
+        <a href="{{ url_for('views.compare') }}" class="feature-link">Compare →</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <h3 class="feature-title">Ask the assistant</h3>
+        <p class="feature-desc">Describe your scenario. Get the exact standards that apply across all frameworks — with citations and links to look them up.</p>
+        <a href="{{ url_for('views.chat') }}" class="feature-link">Ask AI →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Starter prompts -->
+<section class="starters-section">
+  <div class="container">
+    <h2 class="section-title">Try the AI assistant</h2>
+    <p class="section-sub">Describe your situation. The assistant identifies the right standards and explains how they apply.</p>
+    <div class="starters-grid">
+      <a href="{{ url_for('views.chat') }}?q=We+just+signed+a+5-year+lease+for+office+space.+How+do+we+account+for+it%3F" class="starter-card">
+        "We just signed a 5-year lease for office space. How do we account for it?"
+      </a>
+      <a href="{{ url_for('views.chat') }}?q=A+customer+paid+us+upfront+for+3+years+of+software+access.+When+do+we+recognize+revenue%3F" class="starter-card">
+        "A customer paid us upfront for 3 years of software access. When do we recognize revenue?"
+      </a>
+      <a href="{{ url_for('views.chat') }}?q=We+acquired+another+company+last+quarter.+What+standards+apply%3F" class="starter-card">
+        "We acquired another company last quarter. What standards apply?"
+      </a>
+      <a href="{{ url_for('views.chat') }}?q=How+do+I+value+obsolete+inventory+on+the+balance+sheet%3F" class="starter-card">
+        "How do I value obsolete inventory on the balance sheet?"
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
