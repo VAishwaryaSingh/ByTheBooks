@@ -37,4 +37,6 @@ Python 3.11 + Flask + gunicorn + SQLite + Jinja2 + vanilla JS + the Anthropic AP
 
 ## Disclaimer
 
+Independent educational project. Not affiliated with or endorsed by the IFRS Foundation, FASB, FRC, ICAI or other standard-setters. Summaries are my own; refer to the official texts.
+
 Standards summaries are for educational reference only. Always consult the official standard text for professional use — official standards may be subject to copyright by their respective issuing bodies.
