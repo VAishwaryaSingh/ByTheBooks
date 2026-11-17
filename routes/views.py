@@ -8,7 +8,16 @@ views_bp = Blueprint("views", __name__)
 def index():
     frameworks = get_all_frameworks()
     featured = search_standards(limit=6)
-    return render_template("index.html", frameworks=frameworks, featured=featured)
+    standard_count = sum(f["standard_count"] for f in frameworks)
+    topic_count = len(get_all_topics())
+    return render_template(
+        "index.html",
+        frameworks=frameworks,
+        featured=featured,
+        framework_count=len(frameworks),
+        standard_count=standard_count,
+        topic_count=topic_count,
+    )
 
 
 @views_bp.route("/browse")

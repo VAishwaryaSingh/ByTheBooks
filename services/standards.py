@@ -1,7 +1,7 @@
 from database import get_db
 
 
-def search_standards(q=None, framework=None, topic=None, status=None, limit=100):
+def search_standards(q=None, framework=None, topic=None, status=None, limit=500):
     conn = get_db()
     conditions = []
     params = []
